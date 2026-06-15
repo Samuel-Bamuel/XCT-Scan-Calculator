@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XCT Scan Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>XCT Scan Calculator</h1>
+            <p>Calculate magnification, field of view, and effective pixel size</p>
+        </header>
+
+        <main>
+            <!-- Input Section -->
+            <div class="section">
+                <h2>Input Parameters</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="sod">SOD (Source-to-Object Distance)</label>
+                        <input type="number" id="sod" placeholder="e.g., 50" step="0.1">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="sdd">SDD (Source-to-Detector Distance)</label>
+                        <input type="number" id="sdd" placeholder="e.g., 200" step="0.1">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="detectorPixel">Detector Pixel Size</label>
+                        <input type="number" id="detectorPixel" placeholder="e.g., 0.127" step="0.001">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="detectorWidth">Detector Width</label>
+                        <input type="number" id="detectorWidth" placeholder="e.g., 120" step="0.1">
+                        <span class="unit">mm</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Geometry Diagram -->
+            <div class="section">
+                <h2>Scan Geometry</h2>
+                <svg class="diagram" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Source (left point) -->
+                    <circle cx="30" cy="150" r="8" fill="#FF6B6B" class="diagram-element"/>
+                    <text x="15" y="130" class="diagram-label">Source</text>
+
+                    <!-- Object (middle) -->
+                    <circle cx="150" cy="150" r="12" fill="#4ECDC4" class="diagram-element"/>
+                    <text x="130" y="130" class="diagram-label">Object</text>
+
+                    <!-- Detector (right) -->
+                    <rect x="350" y="50" width="20" height="200" fill="#95E1D3" class="diagram-element"/>
+                    <text x="335" y="270" class="diagram-label">Detector</text>
+
+                    <!-- SOD Line -->
+                    <line x1="30" y1="150" x2="150" y2="150" stroke="#FF6B6B" stroke-width="2" stroke-dasharray="5,5"/>
+                    <text x="85" y="140" class="diagram-measurement" id="sodLabel">SOD</text>
+
+                    <!-- SDD Line -->
+                    <line x1="30" y1="150" x2="360" y2="150" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="5,5"/>
+                    <text x="185" y="170" class="diagram-measurement" id="sddLabel">SDD</text>
+
+                    <!-- Cone of X-rays (visualization) -->
+                    <line x1="30" y1="150" x2="360" y2="50" stroke="#FFD93D" stroke-width="1" opacity="0.5"/>
+                    <line x1="30" y1="150" x2="360" y2="250" stroke="#FFD93D" stroke-width="1" opacity="0.5"/>
+                </svg>
+            </div>
+
+            <!-- Results Section -->
+            <div class="section results">
+                <h2>Calculated Results</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h3>Magnification Factor</h3>
+                        <div class="result-value" id="magnification">-</div>
+                        <p class="result-formula">M = SDD / SOD</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Effective Pixel Size</h3>
+                        <div class="result-value" id="pixelSize">-</div>
+                        <p class="result-unit">µm</p>
+                        <p class="result-formula">EPS = Detector Pixel Size / M</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Field of View</h3>
+                        <div class="result-value" id="fov">-</div>
+                        <p class="result-unit">mm</p>
+                        <p class="result-formula">FOV = Detector Width / M</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reset Button -->
+            <div class="section">
+                <button id="resetBtn" class="reset-button">Reset All</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>XCT Scan Calculator | Lab Reference Tool</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
