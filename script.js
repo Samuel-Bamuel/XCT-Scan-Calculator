@@ -63,7 +63,7 @@ function calculate() {
 
         // Calculate field of view
         if (!isNaN(detectorWidth) && detectorWidth > 0) {
-            const fov = detectorWidth / magnification;
+            const fov = (detectorWidth * detectorPixel) / magnification;
             fovResult.textContent = fov.toFixed(3);
         } else {
             fovResult.textContent = '-';
@@ -77,8 +77,8 @@ function calculate() {
 
     // Calculate scan parameters
     if (!isNaN(exposureTime) && !isNaN(numScans) && exposureTime > 0 && numScans > 0) {
-        // Calculate total scan time (convert ms to seconds)
-        const exposureScanTime = (exposureTime + 500 * numScans) / 1000 / 60 ;
+        // Calculate total scan time (convert ms to hours)
+        const exposureScanTime = (exposureTime + 500 * numScans) / 360000 ;
         scanTimeResult.textContent = totalScanTime.toFixed(2);
     } else {
         scanTimeResult.textContent = '-';
