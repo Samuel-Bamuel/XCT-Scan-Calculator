@@ -10,13 +10,13 @@
     <div class="container">
         <header>
             <h1>XCT Scan Calculator</h1>
-            <p>Calculate magnification, field of view, and effective pixel size</p>
+            <p>Calculate magnification, field of view, scan time, and storage requirements</p>
         </header>
 
         <main>
-            <!-- Input Section -->
+            <!-- Geometry Parameters Section -->
             <div class="section">
-                <h2>Input Parameters</h2>
+                <h2>Geometry Parameters</h2>
                 <div class="input-grid">
                     <div class="input-group">
                         <label for="sod">SOD (Source-to-Object Distance)</label>
@@ -37,6 +37,33 @@
                         <label for="detectorWidth">Detector Width</label>
                         <input type="number" id="detectorWidth" placeholder="e.g., 120" step="0.1">
                         <span class="unit">mm</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scan Parameters Section -->
+            <div class="section">
+                <h2>Scan Parameters</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="exposureTime">Exposure Time per Projection</label>
+                        <input type="number" id="exposureTime" placeholder="e.g., 100" step="0.1">
+                        <span class="unit">ms</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="numScans">Number of Projections</label>
+                        <input type="number" id="numScans" placeholder="e.g., 1440" step="1" min="1">
+                        <span class="unit">projections</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="angularDistance">Angular Distance</label>
+                        <input type="number" id="angularDistance" placeholder="e.g., 360" step="0.1">
+                        <span class="unit">degrees</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="projectionSize">Projection Size</label>
+                        <input type="number" id="projectionSize" placeholder="e.g., 8193" step="1">
+                        <span class="unit">KB</span>
                     </div>
                 </div>
             </div>
@@ -71,9 +98,9 @@
                 </svg>
             </div>
 
-            <!-- Results Section -->
+            <!-- Geometry Results Section -->
             <div class="section results">
-                <h2>Calculated Results</h2>
+                <h2>Geometry Results</h2>
                 <div class="results-grid">
                     <div class="result-item">
                         <h3>Magnification Factor</h3>
@@ -91,6 +118,31 @@
                         <div class="result-value" id="fov">-</div>
                         <p class="result-unit">mm</p>
                         <p class="result-formula">FOV = Detector Width / M</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scan Results Section -->
+            <div class="section results">
+                <h2>Scan Results</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h3>Total Scan Time</h3>
+                        <div class="result-value" id="scanTime">-</div>
+                        <p class="result-unit">seconds</p>
+                        <p class="result-formula">T = (Exposure Time × Projections) / 1000</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Total Data Size</h3>
+                        <div class="result-value" id="dataSize">-</div>
+                        <p class="result-unit">GB</p>
+                        <p class="result-formula">Size = (Projections × Projection Size) / 1,000,000</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Angular Step Size</h3>
+                        <div class="result-value" id="angularStep">-</div>
+                        <p class="result-unit">degrees</p>
+                        <p class="result-formula">Step = Angular Distance / Projections</p>
                     </div>
                 </div>
             </div>
