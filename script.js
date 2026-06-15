@@ -78,7 +78,7 @@ function calculate() {
     // Calculate scan parameters
     if (!isNaN(exposureTime) && !isNaN(numScans) && exposureTime > 0 && numScans > 0) {
         // Calculate total scan time (convert ms to seconds)
-        const totalScanTime = (exposureTime * numScans) / 1000;
+        const exposureScanTime = (exposureTime + 500 * numScans) / 1000 / 60 ;
         scanTimeResult.textContent = totalScanTime.toFixed(2);
     } else {
         scanTimeResult.textContent = '-';
