@@ -38,6 +38,11 @@
                         <input type="number" id="detectorWidth" placeholder="e.g., 2048" step="1">
                         <span class="unit">pixels</span>
                     </div>
+                    <div class="input-group">
+                        <label for="objectWidth">Object Width</label>
+                        <input type="number" id="objectWidth" placeholder="e.g., 10" step="0.1">
+                        <span class="unit">mm</span>
+                    </div>
                 </div>
             </div>
 
@@ -71,30 +76,47 @@
             <!-- Geometry Diagram -->
             <div class="section">
                 <h2>Scan Geometry</h2>
-                <svg class="diagram" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                <svg class="diagram" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background -->
+                    <rect width="800" height="400" fill="#f9f9f9"/>
+                    
                     <!-- Source (left point) -->
-                    <circle cx="30" cy="150" r="8" fill="#FF6B6B" class="diagram-element"/>
-                    <text x="15" y="130" class="diagram-label">Source</text>
+                    <circle id="sourcePoint" cx="40" cy="200" r="8" fill="#FF6B6B" class="diagram-element"/>
+                    <text x="20" y="180" class="diagram-label">Source</text>
 
                     <!-- Object (middle) -->
-                    <circle cx="150" cy="150" r="12" fill="#4ECDC4" class="diagram-element"/>
-                    <text x="130" y="130" class="diagram-label">Object</text>
+                    <g id="objectGroup">
+                        <circle id="objectCenter" cx="150" cy="200" r="12" fill="#4ECDC4" class="diagram-element"/>
+                        <rect id="objectRect" x="140" y="195" width="20" height="10" fill="#4ECDC4" opacity="0.6" class="diagram-element"/>
+                        <text x="130" y="230" class="diagram-label">Object</text>
+                    </g>
 
                     <!-- Detector (right) -->
-                    <rect x="350" y="50" width="20" height="200" fill="#95E1D3" class="diagram-element"/>
-                    <text x="335" y="270" class="diagram-label">Detector</text>
+                    <g id="detectorGroup">
+                        <rect id="detectorRect" x="500" y="100" width="20" height="200" fill="#95E1D3" class="diagram-element"/>
+                        <text x="480" y="330" class="diagram-label">Detector</text>
+                    </g>
 
-                    <!-- SOD Line -->
-                    <line x1="30" y1="150" x2="150" y2="150" stroke="#FF6B6B" stroke-width="2" stroke-dasharray="5,5"/>
-                    <text x="85" y="140" class="diagram-measurement" id="sodLabel">SOD</text>
+                    <!-- FOV representation on detector -->
+                    <rect id="fovRect" x="500" y="150" width="20" height="100" fill="#FFD93D" opacity="0.3" class="diagram-element"/>
 
-                    <!-- SDD Line -->
-                    <line x1="30" y1="150" x2="360" y2="150" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="5,5"/>
-                    <text x="185" y="170" class="diagram-measurement" id="sddLabel">SDD</text>
+                    <!-- SOD Line and label -->
+                    <line id="sodLine" x1="40" y1="200" x2="150" y2="200" stroke="#FF6B6B" stroke-width="2" stroke-dasharray="5,5"/>
+                    <text id="sodLabel" x="90" y="190" class="diagram-measurement">SOD</text>
 
-                    <!-- Cone of X-rays (visualization) -->
-                    <line x1="30" y1="150" x2="360" y2="50" stroke="#FFD93D" stroke-width="1" opacity="0.5"/>
-                    <line x1="30" y1="150" x2="360" y2="250" stroke="#FFD93D" stroke-width="1" opacity="0.5"/>
+                    <!-- SDD Line and label -->
+                    <line id="sddLine" x1="40" y1="200" x2="510" y2="200" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="5,5"/>
+                    <text id="sddLabel" x="270" y="220" class="diagram-measurement">SDD</text>
+
+                    <!-- Cone of X-rays (upper) -->
+                    <line id="coneUpper" x1="40" y1="200" x2="510" y2="100" stroke="#FFD93D" stroke-width="1.5" opacity="0.5"/>
+                    
+                    <!-- Cone of X-rays (lower) -->
+                    <line id="coneLower" x1="40" y1="200" x2="510" y2="300" stroke="#FFD93D" stroke-width="1.5" opacity="0.5"/>
+
+                    <!-- Status indicator -->
+                    <circle id="statusIndicator" cx="750" cy="350" r="8" fill="#999" class="diagram-element"/>
+                    <text id="statusText" x="680" y="360" class="diagram-label" font-size="12">-</text>
                 </svg>
             </div>
 
@@ -118,6 +140,12 @@
                         <div class="result-value" id="fov">-</div>
                         <p class="result-unit">mm</p>
                         <p class="result-formula">FOV = (Sensor Width × Pixel Size) / M</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Object Coverage</h3>
+                        <div class="result-value" id="objectCoverage">-</div>
+                        <p class="result-unit">%</p>
+                        <p class="result-formula">Coverage = (FOV / Object Width) × 100</p>
                     </div>
                 </div>
             </div>
